@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jiri Cepelka</Authors>
+    <Company>Software9119</Company>
+    <Description>Provides list with fast enumerator. It enumerates circa 30 % faster then List&lt;T&gt; enumerator.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>Verbal consent needed.</Copyright>
+    <PackageLicenseExpression></PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>
