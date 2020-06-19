@@ -34,15 +34,17 @@ namespace UnitTests
     [TestMethod]
     public void PerfTest()
     {
-      int testCycles = 9_000;
+      int testCycles = 500_000;
 
       var listTimes_Foreach = new List<TimeSpan>();
       var fastListTimes_Foreach = new List<TimeSpan>();
-      var array_Foreach = new List<TimeSpan>();
+      var arrayTimes_Foreach = new List<TimeSpan>();
 
       var listTimes_For = new List<TimeSpan>();
       var fastListTimes_For = new List<TimeSpan>();
-      var array_For = new List<TimeSpan>();
+      var arrayTimes_For = new List<TimeSpan>();
+
+      var arrayTimes_For_Unsafe = new List<TimeSpan>();
 
       long[] numbers = Enumerable
         .Range(0, 500_000)
@@ -59,38 +61,46 @@ namespace UnitTests
       {
         TestForeach(testList, listTimes_Foreach, stopWatch, refSum);
         TestForeach(testFastList, fastListTimes_Foreach, stopWatch, refSum);
-        TestForeach(numbers, array_Foreach, stopWatch, refSum);
+        TestForeach(numbers, arrayTimes_Foreach, stopWatch, refSum);
 
         TestFor(testList, listTimes_For, stopWatch, refSum);
         TestFor(testFastList, fastListTimes_For, stopWatch, refSum);
-        TestFor_Array(numbers, array_For, stopWatch, refSum);
+        TestFor_Array(numbers, arrayTimes_For, stopWatch, refSum);
+
+        TestFor_Array_Unsafe(numbers, arrayTimes_For_Unsafe, stopWatch, refSum);
       }
 
       DiscardMinMaxValues(listTimes_Foreach);
       DiscardMinMaxValues(fastListTimes_Foreach);
-      DiscardMinMaxValues(array_Foreach);
+      DiscardMinMaxValues(arrayTimes_Foreach);
 
       DiscardMinMaxValues(listTimes_For);
       DiscardMinMaxValues(fastListTimes_For);
-      DiscardMinMaxValues(array_For);
+      DiscardMinMaxValues(arrayTimes_For);
+
+      DiscardMinMaxValues(arrayTimes_For_Unsafe);
 
       TimeSpan listTimes_Foreach_Sum = Sum(listTimes_Foreach);
       TimeSpan fastListTimes_Foreach_Sum = Sum(fastListTimes_Foreach);
-      TimeSpan array_Foreach_Sum = Sum(array_Foreach);
-      
+      TimeSpan array_Foreach_Sum = Sum(arrayTimes_Foreach);
+
       TimeSpan listTimes_For_Sum = Sum(listTimes_For);
       TimeSpan fastListTimes_For_Sum = Sum(fastListTimes_For);
-      TimeSpan array_For_Sum = Sum(array_For);
+      TimeSpan array_For_Sum = Sum(arrayTimes_For);
+
+      TimeSpan array_For_Unsafe_Sum = Sum(arrayTimes_For_Unsafe);
 
       var strBuilder = new StringBuilder();
-            
+
       strBuilder.AppendLine($"{nameof(listTimes_Foreach)} {listTimes_Foreach_Sum}");
       strBuilder.AppendLine($"{nameof(fastListTimes_Foreach)} {fastListTimes_Foreach_Sum}");
-      strBuilder.AppendLine($"{nameof(array_Foreach)} {array_Foreach_Sum}");
-      
-      strBuilder.AppendLine($"{nameof(listTimes_For)} {listTimes_For_Sum}");      
+      strBuilder.AppendLine($"{nameof(arrayTimes_Foreach)} {array_Foreach_Sum}");
+
+      strBuilder.AppendLine($"{nameof(listTimes_For)} {listTimes_For_Sum}");
       strBuilder.AppendLine($"{nameof(fastListTimes_For)} {fastListTimes_For_Sum}");
-      strBuilder.AppendLine($"{nameof(array_For)} {array_For_Sum}");
+      strBuilder.AppendLine($"{nameof(arrayTimes_For)} {array_For_Sum}");
+
+      strBuilder.AppendLine($"{nameof(arrayTimes_For_Unsafe)} {array_For_Unsafe_Sum}");
       strBuilder.AppendLine();
 
       string result = strBuilder.ToString();
@@ -105,6 +115,8 @@ namespace UnitTests
 
     static void DiscardMinMaxValues(List<TimeSpan> timeSpans)
     {
+      if (!timeSpans.Any()) { return; }
+
       var max = timeSpans.Max();
       var min = timeSpans.Min();
 
@@ -161,6 +173,26 @@ namespace UnitTests
       for (var i = 0; i < list.Length; ++i)
       {
         sum += list[i];
+      }
+
+      stopwatch.Stop();
+      times.Add(stopwatch.Elapsed);
+
+      Assert.AreEqual(refSum, sum);
+    }
+
+    unsafe void TestFor_Array_Unsafe(long[] list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
+    {
+
+      var sum = 0L;
+      stopwatch.Restart();
+
+      fixed (long* l = &list[0])
+      {
+        for (var i = 0; i < list.Length; ++i)
+        {
+          sum += l[i];
+        }
       }
 
       stopwatch.Stop();
