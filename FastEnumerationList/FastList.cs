@@ -39,9 +39,9 @@ namespace FastEnumerationList
 
       public void Dispose() { }
 
-      public bool MoveNext() => index < items.Length;
+      public bool MoveNext() => ++index < items.Length;
 
-      public T Current => items[index++];
+      public T Current => items[index];
 
       object IEnumerator.Current => Current;
 

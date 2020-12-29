@@ -7,6 +7,7 @@
     <Description>Provides list with fast enumerator. It enumerates circa 30 % faster then List&lt;T&gt; enumerator.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>Verbal consent needed.</Copyright>
+    <PackageId>Software9119.FastEnumerationList</PackageId>
   </PropertyGroup>
 
 </Project>
