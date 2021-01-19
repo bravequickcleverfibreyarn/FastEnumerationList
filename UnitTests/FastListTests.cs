@@ -21,7 +21,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void GetEnumerator_FastListDeclared_GotListEnumerator()
+    public void GetEnumerator_FastListDeclared_GotFastListEnumerator()
     {
       FastList<int> fastListDeclared = new FastList<int>();
 
