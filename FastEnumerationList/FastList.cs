@@ -6,14 +6,8 @@ using System.Reflection;
 namespace FastEnumerationList
 {
   public class FastList<T> : List<T>, IEnumerable<T>
-  {    
-    static readonly FieldInfo _itemsInfo;
-
-    static FastList()
-    {
-      FieldInfo[] fields = typeof(List<T>).GetFields(BindingFlags.Instance | BindingFlags.NonPublic);      
-      _itemsInfo = fields.First(f => f.Name == "_items");      
-    }
+  {
+    static readonly FieldInfo _itemsInfo = typeof(List<T>).GetFields(BindingFlags.Instance | BindingFlags.NonPublic).First(f => f.Name == "_items");
 
     public T[] Items => (T[])_itemsInfo.GetValue(this);
 
@@ -24,14 +18,14 @@ namespace FastEnumerationList
     public FastList(int capacity) : base(capacity) { }
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator() => new FastEnumerator(Items);
-    
+
     new public IEnumerator GetEnumerator() => ((IEnumerable<T>)this).GetEnumerator();
 
-    public class FastEnumerator : IEnumerator<T>
-    {      
+    public sealed class FastEnumerator : IEnumerator<T>
+    {
       T[] items;
       int index;
-      
+
       public FastEnumerator(T[] items)
       {
         this.items = items;

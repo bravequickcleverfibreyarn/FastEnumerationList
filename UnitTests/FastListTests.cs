@@ -23,18 +23,19 @@ namespace UnitTests
     [TestMethod]
     public void GetEnumerator_FastListDeclared_GotFastListEnumerator()
     {
-      FastList<int> fastListDeclared = new FastList<int>();
+      var fastListDeclared = new FastList<int>();
 
       Assert.AreNotEqual(GetListEnumeratorType<int>(), fastListDeclared.GetEnumerator().GetType());
     }
 
-    Type GetListEnumeratorType<T>() => new List<T>().GetEnumerator().GetType();
+    static Type GetListEnumeratorType<T>() => new List<T>().GetEnumerator().GetType();
 
 
     [TestMethod]
     public void PerfTest()
     {
-      int testCycles = 500_000;
+      //int testCycles = 500_000;
+      int testCycles = 500;//_000;
 
       var listTimes_Foreach = new List<TimeSpan>();
       var fastListTimes_Foreach = new List<TimeSpan>();
@@ -130,7 +131,7 @@ namespace UnitTests
 
     static TimeSpan Sum(List<TimeSpan> timeSpans) => timeSpans.Aggregate(new TimeSpan(0, 0, 0), (acc, ts) => acc.Add(ts));
 
-    void TestForeach(IEnumerable<long> list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
+    static void TestForeach(IEnumerable<long> list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
     {
 
       var sum = 0L;
@@ -147,7 +148,7 @@ namespace UnitTests
       Assert.AreEqual(refSum, sum);
     }
 
-    void TestFor(List<long> list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
+    static void TestFor(List<long> list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
     {
 
       var sum = 0L;
@@ -164,7 +165,7 @@ namespace UnitTests
       Assert.AreEqual(refSum, sum);
     }
 
-    void TestFor_Array(long[] list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
+    static void TestFor_Array(long[] list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
     {
 
       var sum = 0L;
@@ -181,7 +182,7 @@ namespace UnitTests
       Assert.AreEqual(refSum, sum);
     }
 
-    unsafe void TestFor_Array_Unsafe(long[] list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
+    static unsafe void TestFor_Array_Unsafe(long[] list, List<TimeSpan> times, Stopwatch stopwatch, long refSum)
     {
 
       var sum = 0L;
