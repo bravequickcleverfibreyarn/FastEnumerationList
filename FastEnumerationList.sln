@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29905.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastEnumerationList", "FastEnumerationList\FastEnumerationList.csproj", "{6FA75D3D-5B50-4D4E-A284-74CD6739B34D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastEnumerationList", "FastEnumerationList\FastEnumerationList.csproj", "{6FA75D3D-5B50-4D4E-A284-74CD6739B34D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6C4F550D-C6CF-4AB0-A1C4-6E559CDF890E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6C4F550D-C6CF-4AB0-A1C4-6E559CDF890E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00861DD3-221B-4C3C-B251-56FEF43AA626}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

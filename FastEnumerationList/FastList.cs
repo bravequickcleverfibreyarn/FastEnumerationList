@@ -26,10 +26,7 @@ namespace FastEnumerationList
       T[] items;
       int index;
 
-      public FastEnumerator(T[] items)
-      {
-        this.items = items;
-      }
+      public FastEnumerator (T [] items) => this.items = items;
 
       public void Dispose() { }
 
